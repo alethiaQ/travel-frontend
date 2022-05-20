@@ -1,20 +1,15 @@
 import React from 'react';
 import {
   ChakraProvider,
-  Box,
   Stack,
   Flex,
   Button,
   Text,
   VStack,
   useBreakpointValue,
-  Link,
-  Code,
-  Grid,
   theme,
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import { Link } from 'react-router-dom';
 import FooterComponent from './components/footer';
 import JoinOurTeam from './components/top-form';
 import Nav from './components/Nav';

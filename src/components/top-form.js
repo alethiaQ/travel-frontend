@@ -296,12 +296,12 @@ export default class JoinOurTeam extends Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log(this.state);
-    // this.setState({
-    //   to: '',
-    //   from: '',
-    //   date: '',
-    //   airline: '',
-    // });
+    this.setState({
+      to: '',
+      from: '',
+      date: '',
+      airline: '',
+    });
   }
   render() {
     return (

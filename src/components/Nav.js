@@ -20,6 +20,7 @@ import {
   Center,
   HStack,
 } from '@chakra-ui/react';
+import { Link as ReactLink } from 'react-router-dom';
 import { MdFlightTakeoff } from 'react-icons/md';
 
 // transBlack: "rgba(0, 0, 0, 0.2)"
@@ -33,6 +34,7 @@ const NavLink = ({ children }) => (
       bg: useColorModeValue('gray.200', 'gray.700'),
     }}
     href={'#'}
+    as={ReactLink}
   >
     {children}
   </Link>
@@ -81,9 +83,21 @@ export default function Nav() {
                   </Center>
                   <br />
                   <MenuDivider />
-                  <MenuItem>Profile</MenuItem>
-                  <MenuItem>Account Settings</MenuItem>
-                  <MenuItem>Logout</MenuItem>
+                  <MenuItem>
+                    <Link as={ReactLink} to="/profile">
+                      Profile
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link as={ReactLink} to="/account-settings">
+                      Account Settings
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link as={ReactLink} to="/logout">
+                      Logout
+                    </Link>
+                  </MenuItem>
                 </MenuList>
                 {/* END USER BOX */}
               </Menu>
