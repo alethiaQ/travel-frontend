@@ -2,39 +2,73 @@ import React from 'react';
 import {
   ChakraProvider,
   Box,
+  Stack,
+  Flex,
+  Button,
   Text,
-  Link,
   VStack,
+  useBreakpointValue,
+  Link,
   Code,
   Grid,
   theme,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { Logo } from './Logo';
-
+import FooterComponent from './components/footer';
+import JoinOurTeam from './components/top-form';
+import Nav from './components/Nav';
+import StatsCard from './components/stat-boxes';
+// transBlack: "rgba(0, 0, 0, 0.2)"
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
+      <Nav />
+      <Flex
+        w={'full'}
+        h={'80vh'}
+        backgroundImage={'url(background.jpg)'}
+        backgroundSize={'cover'}
+        backgroundPosition={'center center'}
+      >
+        <VStack
+          w={'full'}
+          justify={'center'}
+          px={useBreakpointValue({ base: 4, md: 8 })}
+          bgGradient={'linear(to-b, blackAlpha.900, transparent)'}
+        >
+          <JoinOurTeam />
+          <Stack
+            maxW={'2xl'}
+            align="center"
+            spacing={6}
+            position="absolute"
+            top={180}
+          >
+            <Text
+              color={'white'}
+              fontWeight={400}
+              lineHeight={1.2}
+              fontSize={'xx-large'}
             >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
+              Let Your Journey Begin Now...
+            </Text>
+            {/* <Stack direction={'row'}> */}
+            <Button
+              variant="outline"
+              bg={'transparent'}
+              rounded={'full'}
+              color={'white'}
+              _hover={{ bg: 'whiteAlpha.500' }}
+            >
+              I'm Flexible
+            </Button>
+            {/* </Stack> */}
+            <StatsCard />
+          </Stack>
+        </VStack>
+      </Flex>
+      <FooterComponent />
     </ChakraProvider>
   );
 }
