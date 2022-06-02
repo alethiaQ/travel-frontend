@@ -9,13 +9,15 @@ import {
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { Component } from 'react';
+import { Navigate } from 'react-router-dom';
 import {
   AutoComplete,
   AutoCompleteInput,
   AutoCompleteItem,
   AutoCompleteList,
 } from '@choc-ui/chakra-autocomplete';
-export default class JoinOurTeam extends Component {
+// const navigate = useNavigate();
+export default class TopForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -295,13 +297,14 @@ export default class JoinOurTeam extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
+    // console.log(this.state);
     this.setState({
       to: '',
       from: '',
       date: '',
       airline: '',
     });
+    // navigate('../search', { replace: true });
   }
   render() {
     return (
@@ -313,13 +316,13 @@ export default class JoinOurTeam extends Component {
           rounded="full"
           boxShadow="md"
           m="4"
-          borderRadius="sm"
+          borderRadius="30px"
           bg="white"
-          w="35%"
-          h="55"
+          w="40%"
+          h="6%"
           position="absolute"
           top={10}
-          left={538}
+          left={498}
         >
           <HStack
             divider={<StackDivider borderColor="gray.200" />}
@@ -334,7 +337,7 @@ export default class JoinOurTeam extends Component {
                   name="from"
                 >
                   <AutoCompleteInput
-                    size="xs"
+                    size="sm"
                     variant="flushed"
                     type="search"
                     placeholder="From..."
@@ -361,7 +364,7 @@ export default class JoinOurTeam extends Component {
                 </AutoComplete>
               </FormControl>
             </Box>
-            <Box bg="white" color="black" h={6}>
+            <Box bg="white" color="black">
               <FormControl id="To" isRequired>
                 <AutoComplete
                   openOnFocus
@@ -369,7 +372,7 @@ export default class JoinOurTeam extends Component {
                   name="to"
                 >
                   <AutoCompleteInput
-                    size="xs"
+                    size="sm"
                     variant="flushed"
                     type="search"
                     placeholder="To..."
@@ -400,7 +403,7 @@ export default class JoinOurTeam extends Component {
             <Box bg="white" color="black">
               <FormControl id="date">
                 <Input
-                  size="xs"
+                  size="sm"
                   variant="flushed"
                   name="date"
                   value={this.state.date}
@@ -414,7 +417,7 @@ export default class JoinOurTeam extends Component {
             <Box bg="white" color="black">
               <FormControl id="airline">
                 <Input
-                  size="xs"
+                  size="sm"
                   variant="flushed"
                   name="airline"
                   value={this.state.airline}
@@ -426,7 +429,7 @@ export default class JoinOurTeam extends Component {
               </FormControl>
             </Box>
             <IconButton
-              size="sm"
+              size="md"
               type="submit"
               onSubmit={this.handleSubmit}
               aria-label="Search database"
@@ -434,7 +437,10 @@ export default class JoinOurTeam extends Component {
               icon={<SearchIcon />}
               color="white"
               bg="black"
-            />
+            >
+              {' '}
+              {/* <Navigate to="/search" replace={true} /> */}
+            </IconButton>
           </HStack>
         </Flex>
       </form>

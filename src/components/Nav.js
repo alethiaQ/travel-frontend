@@ -20,7 +20,7 @@ import {
   Center,
   HStack,
 } from '@chakra-ui/react';
-import { Link as ReactLink } from 'react-router-dom';
+import { Outlet, Link as ReactLink } from 'react-router-dom';
 import { MdFlightTakeoff } from 'react-icons/md';
 
 // transBlack: "rgba(0, 0, 0, 0.2)"
@@ -46,7 +46,15 @@ export default function Nav() {
   return (
     <>
       <Box bg="black" px={4}>
-        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+        <Flex
+          as="nav"
+          align="center"
+          justify="space-between"
+          wrap="wrap"
+          w="100%"
+          h={16}
+          bg={['primary.500', 'primary.500', 'transparent', 'transparent']}
+        >
           <HStack color="white">
             <Icon as={MdFlightTakeoff} color="white" />
             <Text fontSize="xl">Travel Pal</Text>
@@ -101,6 +109,7 @@ export default function Nav() {
                 </MenuList>
                 {/* END USER BOX */}
               </Menu>
+              {/* <Outlet /> */}
             </Stack>
           </Flex>
         </Flex>
