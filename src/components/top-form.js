@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { Component } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import {
   AutoComplete,
   AutoCompleteInput,
@@ -330,7 +330,7 @@ export default class TopForm extends Component {
             justify="center"
           >
             <Box bg="white" color="black">
-              <FormControl id="from">
+              <FormControl id="from" ml={1}>
                 <AutoComplete
                   openOnFocus
                   onChange={values => this.handleFromAutoChange(values)}
@@ -428,19 +428,29 @@ export default class TopForm extends Component {
                 />
               </FormControl>
             </Box>
-            <IconButton
-              size="md"
-              type="submit"
-              onSubmit={this.handleSubmit}
-              aria-label="Search database"
-              isRound="true"
-              icon={<SearchIcon />}
-              color="white"
-              bg="black"
+            <Link
+              to="/search"
+              state={{
+                to: 'to',
+                from: this.state.from,
+                airline: this.state.airline,
+                date: this.state.date,
+              }}
             >
-              {' '}
-              {/* <Navigate to="/search" replace={true} /> */}
-            </IconButton>
+              <IconButton
+                size="md"
+                type="submit"
+                onSubmit={this.handleSubmit}
+                aria-label="Search database"
+                isRound="true"
+                icon={<SearchIcon />}
+                color="white"
+                bg="black"
+              >
+                {' '}
+                {/* <Navigate to="/search" replace={true} /> */}
+              </IconButton>
+            </Link>
           </HStack>
         </Flex>
       </form>

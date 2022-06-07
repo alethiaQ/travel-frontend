@@ -5,6 +5,7 @@ import {
   Avatar,
   AvatarBadge,
   Link,
+  IconButton,
   Button,
   Menu,
   MenuButton,
@@ -21,7 +22,8 @@ import {
   HStack,
 } from '@chakra-ui/react';
 import { Outlet, Link as ReactLink } from 'react-router-dom';
-import { MdFlightTakeoff } from 'react-icons/md';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { MdFlightTakeoff, MdHome } from 'react-icons/md';
 
 // transBlack: "rgba(0, 0, 0, 0.2)"
 const NavLink = ({ children }) => (
@@ -60,7 +62,13 @@ export default function Nav() {
             <Text fontSize="xl">Travel Pal</Text>
           </HStack>
           <Flex alignItems={'center'}>
-            <Stack direction={'row'} spacing={7}>
+            <Stack direction={'row'} spacing={5}>
+              <Link as={ReactLink} to="/home">
+                <IconButton colorScheme="white" icon={<MdHome />} />
+                {/* <Icon as={MdHome} color="white" size="lg" />
+                </IconButton> */}
+              </Link>
+
               <Menu>
                 <MenuButton
                   as={Button}

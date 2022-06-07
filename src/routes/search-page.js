@@ -17,7 +17,9 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import { StarIcon, AddIcon, EditIcon } from '@chakra-ui/icons';
+import { useLocation } from 'react-router-dom';
 import { Outlet, Link as ReactLink } from 'react-router-dom';
+import SearchPageForm from '../components/searchpage-form';
 const searchItem = {
   date: '10/14/2022',
   destination: 'Mumbai, India',
@@ -104,6 +106,9 @@ const searchResults = [
   // },
 ];
 export default function SearchPage({ props, ...rest }) {
+  const location = useLocation();
+  const { from, to, airline, date } = location.state;
+  console.log(airline);
   return (
     <Flex
       className="searchContainer"
@@ -120,6 +125,9 @@ export default function SearchPage({ props, ...rest }) {
       {...rest}
     >
       <VStack margin="0 auto">
+        <Box display="flex" alignItems="baseline">
+          <SearchPageForm />
+        </Box>
         <Grid
           h="700px"
           w="800px"
@@ -227,7 +235,7 @@ export default function SearchPage({ props, ...rest }) {
                     </Box>
                     <Box ml="2">
                       {item.depart}
-                      <Box as="span" color="whiteAlpha.900" fontSize="sm">
+                      <Box as="span" color="gray.600" fontSize="sm">
                         {' '}
                         departure
                       </Box>
@@ -275,7 +283,7 @@ export default function SearchPage({ props, ...rest }) {
                     </Box>
                     <Box ml="2">
                       {item.arrival}
-                      <Box as="span" color="whiteAlpha.900" fontSize="sm">
+                      <Box as="span" color="gray.600" fontSize="sm">
                         {' '}
                         arrival
                       </Box>

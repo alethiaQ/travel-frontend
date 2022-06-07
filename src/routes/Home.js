@@ -21,9 +21,9 @@ function Home() {
       <Stack
         maxW={'2xl'}
         align="center"
-        spacing={6}
+        spacing={12}
         position="absolute"
-        top={180}
+        top={200}
       >
         <Text
           color={'white'}
@@ -41,6 +41,7 @@ function Home() {
             rounded={'full'}
             color={'white'}
             _hover={{ bg: 'whiteAlpha.500' }}
+            size="lg"
           >
             I'm Flexible
           </Button>
