@@ -5,6 +5,7 @@ import { Switch } from 'react-router';
 import App from './App';
 import Home from './routes/Home';
 import SearchPage from './routes/search-page';
+
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 import { createRoot } from 'react-dom/client';
@@ -16,12 +17,12 @@ const root = createRoot(container); // createRoot(container!) if you use TypeScr
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route exact path="/" element={<App />}>
+      <Route path="/" element={<App />}>
         <Route path="/home" element={<Home />} />
         {/* <Route path="profile" element={<UserProfiles />}>
             <Route path=":profileId" element={<UserProfile />} />
           </Route> */}
-        <Route exact path="/search" element={<SearchPage />} />
+        <Route path="/search" element={<SearchPage />} />
         <Route
           path="*"
           element={

@@ -7,6 +7,7 @@ import {
   VStack,
   useBreakpointValue,
   Link,
+  Heading,
 } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 function Home() {
@@ -25,14 +26,16 @@ function Home() {
         position="absolute"
         top={200}
       >
-        <Text
+        <Heading
           color={'white'}
-          fontWeight={400}
+          //   fontWeight={400}
           lineHeight={1.2}
-          fontSize={'xx-large'}
+          noOfLines={1}
+          //   fontSize={'xx-large'}
+          size="2xl"
         >
           Let Your Journey Begin Now...
-        </Text>
+        </Heading>
         {/* <Stack direction={'row'}> */}
         <Link as={ReactLink} to="/search">
           <Button

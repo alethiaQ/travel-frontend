@@ -322,7 +322,7 @@ export default class TopForm extends Component {
           h="6%"
           position="absolute"
           top={10}
-          left={498}
+          left={488}
         >
           <HStack
             divider={<StackDivider borderColor="gray.200" />}
@@ -431,11 +431,12 @@ export default class TopForm extends Component {
             <Link
               to="/search"
               state={{
-                to: 'to',
+                to: this.state.to,
                 from: this.state.from,
                 airline: this.state.airline,
                 date: this.state.date,
               }}
+              {...this.props}
             >
               <IconButton
                 size="md"

@@ -58,7 +58,7 @@ export default function Nav() {
           bg={['primary.500', 'primary.500', 'transparent', 'transparent']}
         >
           <HStack color="white">
-            <Icon as={MdFlightTakeoff} color="white" />
+            {/* <Icon as={MdFlightTakeoff} color="white" /> */}
             <Text fontSize="xl">Travel Pal</Text>
           </HStack>
           <Flex alignItems={'center'}>

@@ -5,6 +5,7 @@ import {
   StackDivider,
   Link,
   Button,
+  Input,
 } from '@chakra-ui/react';
 import { Component } from 'react';
 import { Link as ReactLink } from 'react-router-dom';
@@ -16,7 +17,7 @@ export default class SearchPageForm extends Component {
       language: '',
       age: '',
       gender: '',
-      time: '',
+      palAmount: '',
     };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,6 +42,9 @@ export default class SearchPageForm extends Component {
           divider={<StackDivider borderColor="gray.200" />}
           align="center"
           justify="center"
+          position="absolute"
+          top={8}
+          left={550}
         >
           {/* <Box bg="white" color="black"> */}
           <FormControl id="language" ml={1}>
@@ -49,6 +53,7 @@ export default class SearchPageForm extends Component {
               size="md"
               variant="outline"
               name="language"
+              fontSize="md"
               value={this.state.language}
               onChange={this.handleOnChange}
               _placeholder={{ color: 'whiteAlpha' }}
@@ -61,21 +66,19 @@ export default class SearchPageForm extends Component {
           </FormControl>
           {/* </Box> */}
           {/* <Box bg="white" color="black"> */}
-          <FormControl id="age" isRequired>
-            <Select
-              placeholder="Age"
+          <FormControl id="date">
+            <Input
               size="md"
               variant="outline"
               name="age"
               value={this.state.age}
               onChange={this.handleOnChange}
-              _placeholder={{ color: 'whiteAlpha' }}
+              type="search"
+              placeholder="Age"
+              _placeholder={{ color: 'black' }}
               bg="whiteAlpha"
-            >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-            </Select>
+              // _placeholder={{ color: 'grey' }}
+            />
           </FormControl>
           <FormControl id="gender">
             <Select
@@ -83,30 +86,30 @@ export default class SearchPageForm extends Component {
               size="md"
               variant="outline"
               name="gender"
-              value={this.state.gender4}
+              value={this.state.gender}
               onChange={this.handleOnChange}
               _placeholder={{ color: 'whiteAlpha' }}
               bg="whiteAlpha"
             >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+              <option value="any">Any</option>
             </Select>
           </FormControl>
-          <FormControl id="time">
+          <FormControl id="size">
             <Select
-              placeholder="Time"
+              placeholder="Pal Size"
               size="md"
               variant="outline"
               name="time"
-              value={this.state.time}
+              value={this.state.palAmount}
               onChange={this.handleOnChange}
               _placeholder={{ color: 'whiteAlpha' }}
               bg="whiteAlpha"
             >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
+              <option value="1-3">1-3</option>
+              <option value="3-5">3-5</option>
+              <option value="5+">5+</option>
             </Select>
           </FormControl>
 
@@ -117,7 +120,7 @@ export default class SearchPageForm extends Component {
               onSubmit={this.handleSubmit}
               aria-label="Filter database"
               colorScheme="teal"
-              variant="outline"
+              // variant="outline"
             >
               Filter
             </Button>
