@@ -1,5 +1,5 @@
-import TopForm from '../components/top-form';
-import StatsCard from '../components/stat-boxes';
+import TopForm from '../components/MainPageTopForm';
+import StatsCard from '../components/StatBoxes';
 import {
   Stack,
   Button,

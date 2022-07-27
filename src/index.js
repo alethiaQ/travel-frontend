@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
 import { Switch } from 'react-router';
 import App from './App';
 import Home from './routes/Home';
-import SearchPage from './routes/search-page';
+import SearchPage from './routes/SearchPageContainer';
 
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';

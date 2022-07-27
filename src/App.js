@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChakraProvider, Flex } from '@chakra-ui/react';
 import Home from './routes/Home';
-import FooterComponent from './components/footer';
+import FooterComponent from './components/Footer';
 import Nav from './components/Nav';
 import { Outlet } from 'react-router-dom';
 import theme from './theme';

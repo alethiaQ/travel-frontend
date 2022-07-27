@@ -29,10 +29,12 @@ import React, { useState } from 'react';
 import { StarIcon, AddIcon, EditIcon } from '@chakra-ui/icons';
 // import { useLocation } from 'react-router-dom';
 import { Outlet, Link as ReactLink } from 'react-router-dom';
-import SearchPageForm from '../components/searchpage-form';
+import SearchPageForm from '../components/SearchPageFilters';
+import RequestForm from '../components/UserRequestForm';
 import ItemDetail from '../components/ItemDetail';
 import { render } from '@testing-library/react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import GroupRequestForm from '../components/GroupRequestForm';
 
 function withRouter(SearchPage) {
   function ComponentWithRouterProp(props) {
@@ -162,7 +164,8 @@ class SearchPage extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.state.requestData);
+    // console.log(this.state.requestData);
+    // **** FOR IM FLEXIBLE BTN, REQUEST ITEM WILL BE NULL
     const requestOptions = {
       method: 'POST',
       mode: 'no-cors',
@@ -470,7 +473,7 @@ class SearchPage extends React.Component {
     
           )} */}
         </Box>
-        {/* user Modal */}
+        {/* USER INPUT REQUEST MODAL */}
         <Modal
           isCentered
           onClose={this.onCloseUserModal}
@@ -479,11 +482,10 @@ class SearchPage extends React.Component {
         >
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>User Request</ModalHeader>
+            {/* <ModalHeader>User Request</ModalHeader> */}
             <ModalCloseButton />
             <ModalBody>
-              Hey girl Hey
-              {/* <Lorem count={2} /> */}
+              <RequestForm />
             </ModalBody>
             <ModalFooter>
               <Button
@@ -500,6 +502,8 @@ class SearchPage extends React.Component {
             </ModalFooter>
           </ModalContent>
         </Modal>
+
+        {/* PAL GROUP REQUEST MODAL */}
         <Modal
           isCentered
           onClose={this.onCloseRequestModal}
@@ -508,29 +512,10 @@ class SearchPage extends React.Component {
         >
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Request to Join Group</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              Hey girl Hey
-              {/* <Lorem count={2} /> */}
+              <GroupRequestForm />
             </ModalBody>
-            <ModalFooter>
-              <Button
-                colorScheme="teal"
-                variant="outline"
-                mr={3}
-                onClick={this.onCloseRequestModal}
-              >
-                Close
-              </Button>
-              <Button
-                colorScheme="teal"
-                mr={3}
-                onClick={this.onCloseRequestModal}
-              >
-                Submit
-              </Button>
-            </ModalFooter>
           </ModalContent>
         </Modal>
       </Flex>
