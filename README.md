@@ -1,6 +1,6 @@
 CD to src 
-`npm i 
-`npm start
+`npm i`
+`npm start`
 Navigate to /home 
 
 
