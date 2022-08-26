@@ -22,7 +22,7 @@ export default function RequestForm() {
 
   return (
     <Flex
-      minH={'100vh'}
+      //   minH={'100vh'}
       align={'center'}
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
@@ -30,10 +30,10 @@ export default function RequestForm() {
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
-            Sign up
+            Create an Entry
           </Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool features ✌️
+            to find and be found by fellow travelers 🗺
           </Text>
         </Stack>
         <Box

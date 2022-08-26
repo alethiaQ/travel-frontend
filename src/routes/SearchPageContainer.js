@@ -26,7 +26,7 @@ import {
 import React, { useState } from 'react';
 // import { withRouter } from 'react-router-dom';
 // import { useDisclosure } from '@chakra-ui/react';
-import { StarIcon, AddIcon, EditIcon } from '@chakra-ui/icons';
+import { RepeatIcon, AddIcon, EditIcon } from '@chakra-ui/icons';
 // import { useLocation } from 'react-router-dom';
 import { Outlet, Link as ReactLink } from 'react-router-dom';
 import SearchPageForm from '../components/SearchPageFilters';
@@ -159,43 +159,95 @@ class SearchPage extends React.Component {
       requestData: props.location.state,
     };
   }
-  handleInputChange = event => {
-    console.log(event);
-  };
 
   componentDidMount() {
-    // console.log(this.state.requestData);
-    // **** FOR IM FLEXIBLE BTN, REQUEST ITEM WILL BE NULL
+    // this.getRequest(this.state.requestData);
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    const requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow',
+    };
+
+    fetch(
+      'https://8ck0yps8rj.execute-api.us-west-2.amazonaws.com/dev/request?Name=Xiaoxi',
+      requestOptions
+    )
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
+  getRequest(requestedInfo) {
+    let params = '';
+    for (const key in requestedInfo) {
+      requestedInfo[key]
+        ? (params += `${key}=${requestedInfo[key]}`)
+        : (params = params);
+    }
+    console.log(params.replace(/\s/g, ''));
+    params.replace(/\s/g, '');
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    //   mode: 'no-cors',
+    const requestOptions = {
+      method: 'GET',
+      mode: 'no-cors',
+      headers: myHeaders,
+      redirect: 'follow',
+    };
+
+    fetch(
+      `https://8ck0yps8rj.execute-api.us-west-2.amazonaws.com/dev/request?Name=Xiaoxi`,
+      requestOptions
+    )
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
+  postUserRequest() {
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    const body = JSON.stringify({
+      Name: 'Leeth Test',
+      From: 'United States',
+      To: 'India',
+    });
+
     const requestOptions = {
       method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
-      },
-      body: this.state.requestData,
+      headers: myHeaders,
+      body: body,
+      redirect: 'follow',
     };
+
     fetch(
       'https://8ck0yps8rj.execute-api.us-west-2.amazonaws.com/dev/request',
       requestOptions
     )
-      .then(res => {
-        console.log(res);
-        this.setState({ requestOptions: res });
-        console.log(this.state);
-      })
-      .then(
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        error => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
-        }
-      );
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
   }
+  handleInputChange = event => {
+    console.log(event.name);
+    console.log(event.value);
+    const name = event.name;
+    const val = event.value;
+    this.setState({
+      requestData: {
+        [name]: val,
+        ...this.state.requestData,
+      },
+    });
+    console.log(this.state.requestData);
+  };
+  handleEditSubmission = event => {
+    console.log(this.state.requestData);
+  };
   handleClick = (event, item) => {
     this.setState({ detailItemPicked: true, item: item });
   };
@@ -261,17 +313,20 @@ class SearchPage extends React.Component {
                     >
                       Your Request
                     </Box>
-                    <Button colorScheme="teal" size="xs">
-                      <EditIcon />
+                    <Button
+                      colorScheme="teal"
+                      size="xs"
+                      onClick={e => this.handleEditSubmission(e)}
+                    >
+                      <RepeatIcon />
                     </Button>
                   </Box>
                   <HStack lineHeight="tight" ml="2">
                     <Flex fontWeight="semibold">Date</Flex>
                     <Editable
-                      defaultValue={searchItem.date}
+                      defaultValue={this.state.requestData.date}
                       isPreviewFocusable={true}
                       selectAllOnFocus={false}
-                      onChange={this.handleInputChange}
                     >
                       <EditablePreview
                         py={2}
@@ -280,13 +335,20 @@ class SearchPage extends React.Component {
                           background: 'gray.700',
                         }}
                       />
-                      <Input py={2} px={4} as={EditableInput} />
+                      <Input
+                        py={2}
+                        px={4}
+                        as={EditableInput}
+                        value={this.state.requestData.date}
+                        name="date"
+                        onChange={event => this.handleInputChange(event.target)}
+                      />
                     </Editable>
                   </HStack>
                   <HStack lineHeight="tight" ml="2">
                     <Flex fontWeight="semibold">Destination</Flex>
                     <Editable
-                      defaultValue={searchItem.destination}
+                      defaultValue={this.state.requestData.to}
                       isPreviewFocusable={true}
                       selectAllOnFocus={false}
                     >
@@ -315,7 +377,7 @@ class SearchPage extends React.Component {
                   <HStack lineHeight="tight" ml="2">
                     <Flex fontWeight="semibold">From</Flex>
                     <Editable
-                      defaultValue={searchItem.from}
+                      defaultValue={this.state.requestData.from}
                       isPreviewFocusable={true}
                       selectAllOnFocus={false}
                     >
@@ -332,7 +394,7 @@ class SearchPage extends React.Component {
                   <HStack lineHeight="tight" ml="2">
                     <Flex fontWeight="semibold">Airline</Flex>
                     <Editable
-                      defaultValue={searchItem.airline}
+                      defaultValue={this.state.requestData.airline}
                       isPreviewFocusable={true}
                       selectAllOnFocus={false}
                     >

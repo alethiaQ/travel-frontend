@@ -18,7 +18,7 @@ import { SmallCloseIcon } from '@chakra-ui/icons';
 export default function GroupRequestForm() {
   return (
     <Flex
-      minH={'100vh'}
+      //   minH={'100vh'}
       align={'center'}
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
@@ -34,13 +34,13 @@ export default function GroupRequestForm() {
         my={12}
       >
         <Heading lineHeight={1.1} fontSize={{ base: '2xl', sm: '3xl' }}>
-          User Profile Edit
+          Travel Group Request
         </Heading>
         <FormControl id="userName">
           <FormLabel>User Icon</FormLabel>
           <Stack direction={['column', 'row']} spacing={6}>
             <Center>
-              <Avatar size="xl" src="https://bit.ly/sage-adebayo">
+              <Avatar size="xl">
                 <AvatarBadge
                   as={IconButton}
                   size="sm"

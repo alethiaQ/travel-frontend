@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { Component } from 'react';
 import { Link as ReactLink } from 'react-router-dom';
+const langs = require('./../languages.json');
 
 export default class SearchPageForm extends Component {
   constructor(props) {
@@ -21,6 +22,8 @@ export default class SearchPageForm extends Component {
     };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    const languages = langs;
+    // console.log(languages.map(lang => lang.name));
   }
   handleOnChange(event) {
     const { name, value } = event.target;
@@ -44,7 +47,7 @@ export default class SearchPageForm extends Component {
           justify="center"
           position="absolute"
           top={8}
-          left={550}
+          left={530}
         >
           {/* <Box bg="white" color="black"> */}
           <FormControl id="language" ml={1}>
@@ -58,10 +61,15 @@ export default class SearchPageForm extends Component {
               onChange={this.handleOnChange}
               _placeholder={{ color: 'whiteAlpha' }}
               bg="whiteAlpha"
+              width="40"
             >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
+              {langs.map(lang => {
+                return (
+                  <option value={lang.name} width="40">
+                    {lang.name}
+                  </option>
+                );
+              })}
             </Select>
           </FormControl>
           {/* </Box> */}
@@ -91,9 +99,15 @@ export default class SearchPageForm extends Component {
               _placeholder={{ color: 'whiteAlpha' }}
               bg="whiteAlpha"
             >
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-              <option value="any">Any</option>
+              <option value="female" key="female">
+                Female
+              </option>
+              <option value="male" key="male">
+                Male
+              </option>
+              <option value="any" key="any">
+                Any
+              </option>
             </Select>
           </FormControl>
           <FormControl id="size">
@@ -107,9 +121,15 @@ export default class SearchPageForm extends Component {
               _placeholder={{ color: 'whiteAlpha' }}
               bg="whiteAlpha"
             >
-              <option value="1-3">1-3</option>
-              <option value="3-5">3-5</option>
-              <option value="5+">5+</option>
+              <option value="1-3" key="1">
+                1-3
+              </option>
+              <option value="3-5" key="2">
+                3-5
+              </option>
+              <option value="5+" key="3">
+                5+
+              </option>
             </Select>
           </FormControl>
 
