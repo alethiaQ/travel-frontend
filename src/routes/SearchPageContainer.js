@@ -146,7 +146,11 @@ const searchResults = [
   //   airline: 'Qatar Airways',
   // },
 ];
-
+const exampleBody = {
+  statusCode: 200,
+  result:
+    '{"took":4,"timed_out":false,"_shards":{"total":5,"successful":5,"skipped":0,"failed":0},"hits":{"total":{"value":1,"relation":"eq"},"max_score":0.2876821,"hits":[{"_index":"travel-info","_type":"_doc","_id":"d1b95e56-1d28-41d9-ab40-e3ee705d6e98","_score":0.2876821,"_source":{"Name": "Xiaoxi", "From": "Murderland", "To": "Prison"}}]}}',
+};
 class SearchPage extends React.Component {
   constructor(props) {
     super(props);
@@ -162,6 +166,11 @@ class SearchPage extends React.Component {
 
   componentDidMount() {
     // this.getRequest(this.state.requestData);
+    // for single obj.. returns {Name: "", From: "", To: ""}
+    const parsed = JSON.parse(exampleBody.result);
+    // for single obj.. returns {Name: "", From: "", To: ""}
+    const parsedObj = parsed.hits.hits[0]._source;
+    console.log(parsed.hits.hits[0]._source);
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
