@@ -148,8 +148,7 @@ const searchResults = [
 ];
 const exampleBody = {
   statusCode: 200,
-  result:
-    '{"took":4,"timed_out":false,"_shards":{"total":5,"successful":5,"skipped":0,"failed":0},"hits":{"total":{"value":1,"relation":"eq"},"max_score":0.2876821,"hits":[{"_index":"travel-info","_type":"_doc","_id":"d1b95e56-1d28-41d9-ab40-e3ee705d6e98","_score":0.2876821,"_source":{"Name": "Xiaoxi", "From": "Murderland", "To": "Prison"}}]}}',
+  result: [{ Name: 'Xiaoxi', From: 'Murderland', To: 'Prison' }],
 };
 class SearchPage extends React.Component {
   constructor(props) {
@@ -165,30 +164,33 @@ class SearchPage extends React.Component {
   }
 
   componentDidMount() {
-    // this.getRequest(this.state.requestData);
+    this.getRequest(this.state.requestData);
     // for single obj.. returns {Name: "", From: "", To: ""}
     const parsed = JSON.parse(exampleBody.result);
     // for single obj.. returns {Name: "", From: "", To: ""}
-    const parsedObj = parsed.hits.hits[0]._source;
-    console.log(parsed.hits.hits[0]._source);
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
+    // const parsedObj = parsed.hits.hits[0]._source;
+    console.log(parsed);
+    // this.getRequest({ Name: 'Vanitha' });
+    // this.postUserRequest();
+    // const myHeadpoers = new Headers();
+    // myHeaders.append('Content-Type', 'application/json');
 
-    const requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow',
-    };
+    // const requestOptions = {
+    //   method: 'GET',
+    //   headers: myHeaders,
+    //   redirect: 'follow',
+    // };
 
-    fetch(
-      'https://8ck0yps8rj.execute-api.us-west-2.amazonaws.com/dev/request?Name=Xiaoxi',
-      requestOptions
-    )
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+    // fetch(
+    //   'https://8ck0yps8rj.execute-api.us-west-2.amazonaws.com/dev/request?',
+    //   requestOptions
+    // )
+    //   .then(response => response.text())
+    //   .then(result => console.log(result))
+    //   .catch(error => console.log('error', error));
   }
   getRequest(requestedInfo) {
+    console.log(requestedInfo);
     let params = '';
     for (const key in requestedInfo) {
       requestedInfo[key]
@@ -203,13 +205,13 @@ class SearchPage extends React.Component {
     //   mode: 'no-cors',
     const requestOptions = {
       method: 'GET',
-      mode: 'no-cors',
+      // mode: 'no-cors',
       headers: myHeaders,
       redirect: 'follow',
     };
 
     fetch(
-      `https://8ck0yps8rj.execute-api.us-west-2.amazonaws.com/dev/request?Name=Xiaoxi`,
+      `https://8ck0yps8rj.execute-api.us-west-2.amazonaws.com/dev/request?${params}`,
       requestOptions
     )
       .then(response => response.text())

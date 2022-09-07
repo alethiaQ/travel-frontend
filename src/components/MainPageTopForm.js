@@ -21,10 +21,10 @@ export default class TopForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      to: '',
-      from: '',
-      date: '',
-      airline: '',
+      To: '',
+      From: '',
+      Date: '',
+      Airline: '',
     };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleFromAutoChange = this.handleFromAutoChange.bind(this);
@@ -289,20 +289,20 @@ export default class TopForm extends Component {
     this.setState({ [name]: value });
   }
   handleToAutoChange(country) {
-    this.setState({ to: country });
+    this.setState({ To: country });
   }
   handleFromAutoChange(country) {
-    this.setState({ from: country });
+    this.setState({ From: country });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     // console.log(this.state);
     this.setState({
-      to: '',
-      from: '',
-      date: '',
-      airline: '',
+      To: '',
+      From: '',
+      Date: '',
+      Airline: '',
     });
     // navigate('../search', { replace: true });
   }
@@ -334,7 +334,7 @@ export default class TopForm extends Component {
                 <AutoComplete
                   openOnFocus
                   onChange={values => this.handleFromAutoChange(values)}
-                  name="from"
+                  name="From"
                 >
                   <AutoCompleteInput
                     size="sm"
@@ -346,8 +346,8 @@ export default class TopForm extends Component {
                   <AutoCompleteList
                     size="xs"
                     w="100%"
-                    value={this.state.from}
-                    name="from"
+                    value={this.state.From}
+                    name="From"
                   >
                     {this.countries.map((country, cid) => (
                       <AutoCompleteItem
@@ -369,7 +369,7 @@ export default class TopForm extends Component {
                 <AutoComplete
                   openOnFocus
                   onChange={values => this.handleToAutoChange(values)}
-                  name="to"
+                  name="To"
                 >
                   <AutoCompleteInput
                     size="sm"
@@ -381,8 +381,8 @@ export default class TopForm extends Component {
                   <AutoCompleteList
                     size="xs"
                     w="100%"
-                    name="to"
-                    value={this.state.to}
+                    name="To"
+                    value={this.state.To}
                     onChange={this.handleOnChange}
                   >
                     {this.countries.map((country, cid) => (
@@ -405,8 +405,8 @@ export default class TopForm extends Component {
                 <Input
                   size="sm"
                   variant="flushed"
-                  name="date"
-                  value={this.state.date}
+                  name="Date"
+                  value={this.state.Date}
                   onChange={this.handleOnChange}
                   type="search"
                   placeholder="Date.."
@@ -419,8 +419,8 @@ export default class TopForm extends Component {
                 <Input
                   size="sm"
                   variant="flushed"
-                  name="airline"
-                  value={this.state.airline}
+                  name="Airline"
+                  value={this.state.Airline}
                   onChange={this.handleOnChange}
                   type="search"
                   placeholder="Airline"
@@ -431,10 +431,10 @@ export default class TopForm extends Component {
             <Link
               to="/search"
               state={{
-                to: this.state.to,
-                from: this.state.from,
-                airline: this.state.airline,
-                date: this.state.date,
+                To: this.state.To,
+                From: this.state.From,
+                Airline: this.state.Airline,
+                Date: this.state.Date,
               }}
               {...this.props}
             >
