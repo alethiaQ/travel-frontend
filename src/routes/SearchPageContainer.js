@@ -61,89 +61,66 @@ const searchItem = {
 };
 
 const searchResults = [
-  {
-    date: '10/14/2022',
-    destination: 'Washington, DC',
-    from: 'Mumbai, India',
-    airline: 'Emirates',
-    pals: 2,
-    flightNo: 'UA1800',
-    fromAirport: 'BOM',
-    desAirport: 'DCA',
-    depart: '7:00am',
-    arrival: '12:00am',
-    rating: 4,
-    age: '45',
-    language: 'English',
-  },
-  {
-    date: '10/15/2022',
-    destination: 'Washington, DC',
-    from: 'Mumbai, India',
-    airline: 'Qatar Airways',
-    pals: 1,
-    flightNo: 'OKL200',
-    fromAirport: 'BOM',
-    desAirport: 'DCA',
-    depart: '4:00pm',
-    arrival: '1:00pm',
-    rating: 3,
-    age: '45',
-    language: 'English',
-  },
-  {
-    date: '10/14/2022',
-    destination: 'Baltimore, Maryland',
-    from: 'Mumbai, India',
-    airline: 'Saudia Airways',
-    pals: 5,
-    flightNo: 'AC2605',
-    fromAirport: 'BOM',
-    desAirport: 'BWI',
-    depart: '5:00am',
-    arrival: '8:00pm',
-    rating: 2,
-    age: '45',
-    language: 'English',
-  },
-  {
-    date: '10/15/2022',
-    destination: 'Dulles, VA',
-    from: 'Mumbai, India',
-    airline: 'Qatar Airways',
-    pals: 0,
-    flightNo: 'SQ618',
-    fromAirport: 'BOM',
-    desAirport: 'IAD',
-    depart: '9:00pm',
-    arrival: '2:00am',
-    rating: 5,
-    age: '45',
-    language: 'English',
-  },
+  { Name: 'Xioaxi', To: 'MurderLand', From: 'Reston' },
   // {
   //   date: '10/14/2022',
-  //   location: 'Mumbai, India',
-  //   from: 'Washington DC',
-  //   airline: 'Qatar Airways',
+  //   destination: 'Washington, DC',
+  //   from: 'Mumbai, India',
+  //   airline: 'Emirates',
+  //   pals: 2,
+  //   flightNo: 'UA1800',
+  //   fromAirport: 'BOM',
+  //   desAirport: 'DCA',
+  //   depart: '7:00am',
+  //   arrival: '12:00am',
+  //   rating: 4,
+  //   age: '45',
+  //   language: 'English',
   // },
   // {
   //   date: '10/15/2022',
-  //   location: 'Mumbai, India',
-  //   from: 'Dulles, VA',
+  //   destination: 'Washington, DC',
+  //   from: 'Mumbai, India',
   //   airline: 'Qatar Airways',
+  //   pals: 1,
+  //   flightNo: 'OKL200',
+  //   fromAirport: 'BOM',
+  //   desAirport: 'DCA',
+  //   depart: '4:00pm',
+  //   arrival: '1:00pm',
+  //   rating: 3,
+  //   age: '45',
+  //   language: 'English',
   // },
   // {
   //   date: '10/14/2022',
-  //   location: 'Mumbai, India',
-  //   from: 'Washington DC',
-  //   airline: 'Qatar Airways',
+  //   destination: 'Baltimore, Maryland',
+  //   from: 'Mumbai, India',
+  //   airline: 'Saudia Airways',
+  //   pals: 5,
+  //   flightNo: 'AC2605',
+  //   fromAirport: 'BOM',
+  //   desAirport: 'BWI',
+  //   depart: '5:00am',
+  //   arrival: '8:00pm',
+  //   rating: 2,
+  //   age: '45',
+  //   language: 'English',
   // },
   // {
   //   date: '10/15/2022',
-  //   location: 'Mumbai, India',
-  //   from: 'Dulles, VA',
+  //   destination: 'Dulles, VA',
+  //   from: 'Mumbai, India',
   //   airline: 'Qatar Airways',
+  //   pals: 0,
+  //   flightNo: 'SQ618',
+  //   fromAirport: 'BOM',
+  //   desAirport: 'IAD',
+  //   depart: '9:00pm',
+  //   arrival: '2:00am',
+  //   rating: 5,
+  //   age: '45',
+  //   language: 'English',
   // },
 ];
 const exampleBody = {
@@ -166,10 +143,10 @@ class SearchPage extends React.Component {
   componentDidMount() {
     this.getRequest(this.state.requestData);
     // for single obj.. returns {Name: "", From: "", To: ""}
-    const parsed = JSON.parse(exampleBody.result);
+    // const parsed = JSON.parse(exampleBody.result);
     // for single obj.. returns {Name: "", From: "", To: ""}
     // const parsedObj = parsed.hits.hits[0]._source;
-    console.log(parsed);
+    // console.log(parsed);
     // this.getRequest({ Name: 'Vanitha' });
     // this.postUserRequest();
     // const myHeadpoers = new Headers();
@@ -205,7 +182,6 @@ class SearchPage extends React.Component {
     //   mode: 'no-cors',
     const requestOptions = {
       method: 'GET',
-      // mode: 'no-cors',
       headers: myHeaders,
       redirect: 'follow',
     };
@@ -215,7 +191,7 @@ class SearchPage extends React.Component {
       requestOptions
     )
       .then(response => response.text())
-      .then(result => console.log(result))
+      .then(result => (searchResults = result))
       .catch(error => console.log('error', error));
   }
   postUserRequest() {
@@ -444,7 +420,7 @@ class SearchPage extends React.Component {
                           ml="1"
                           p="2"
                         >
-                          {item.from}- {item.destination}
+                          {item.From}- {item.To}
                         </Box>
                       </Box>
                       <Box
@@ -455,7 +431,7 @@ class SearchPage extends React.Component {
                         lineHeight="tight"
                         noOfLines={1}
                       >
-                        {item.fromAirport}
+                        {item.Name}
                       </Box>
                       <Box ml="2">
                         {item.depart}
