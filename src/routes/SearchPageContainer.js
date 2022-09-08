@@ -143,29 +143,6 @@ class SearchPage extends React.Component {
 
   componentDidMount() {
     this.getRequest(this.state.requestData);
-    // for single obj.. returns {Name: "", From: "", To: ""}
-    // const parsed = JSON.parse(exampleBody.result);
-    // for single obj.. returns {Name: "", From: "", To: ""}
-    // const parsedObj = parsed.hits.hits[0]._source;
-    // console.log(parsed);
-    // this.getRequest({ Name: 'Vanitha' });
-    // this.postUserRequest();
-    // const myHeadpoers = new Headers();
-    // myHeaders.append('Content-Type', 'application/json');
-
-    // const requestOptions = {
-    //   method: 'GET',
-    //   headers: myHeaders,
-    //   redirect: 'follow',
-    // };
-
-    // fetch(
-    //   'https://8ck0yps8rj.execute-api.us-west-2.amazonaws.com/dev/request?',
-    //   requestOptions
-    // )
-    //   .then(response => response.text())
-    //   .then(result => console.log(result))
-    //   .catch(error => console.log('error', error));
   }
   getRequest(requestedInfo) {
     console.log(requestedInfo);
@@ -192,23 +169,25 @@ class SearchPage extends React.Component {
       requestOptions
     )
       .then(response => response.text())
-      .then(result => this.setState({ responseItems: result }))
+      .then(result =>
+        this.setState(state => {
+          return { responseItems: result };
+        })
+      )
       .catch(error => console.log('error', error));
   }
+  submitRequestForm = event => {
+    event.preventDefault();
+    return this.postUserRequest();
+  };
   postUserRequest() {
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
-    const body = JSON.stringify({
-      Name: 'Leeth Test',
-      From: 'United States',
-      To: 'India',
-    });
-
     const requestOptions = {
       method: 'POST',
       headers: myHeaders,
-      body: body,
+      body: JSON.stringify(this.state.requestData),
       redirect: 'follow',
     };
 
@@ -219,19 +198,45 @@ class SearchPage extends React.Component {
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
+    this.onCloseUserModal();
   }
-  handleInputChange = event => {
-    console.log(event.name);
-    console.log(event.value);
-    const name = event.name;
-    const val = event.value;
-    this.setState({
-      requestData: {
-        [name]: val,
-        ...this.state.requestData,
-      },
+  handleRequestFormChange = obj => {
+    console.log(Object.values(obj)[0]);
+    // console.log(obj.key);
+    // console.log(obj.value);
+    const name = Object.keys(obj)[0];
+    const value = Object.values(obj)[0];
+    this.setState(state => {
+      return (
+        {
+          requestData: {
+            [name]: value,
+            ...state.requestData,
+          },
+        },
+        () => {
+          console.log(this.state.requestData);
+        }
+      );
     });
     console.log(this.state.requestData);
+  };
+  handleInputChange = event => {
+    // console.log(event);
+    // console.log(event.value);
+    const name = event.name;
+    const val = event.value;
+    this.setState(
+      {
+        requestData: {
+          [name]: val,
+          ...this.state.requestData,
+        },
+      },
+      () => {
+        console.log(this.state.requestData);
+      }
+    );
   };
   handleEditSubmission = event => {
     console.log(this.state.requestData);
@@ -312,7 +317,7 @@ class SearchPage extends React.Component {
                   <HStack lineHeight="tight" ml="2">
                     <Flex fontWeight="semibold">Date</Flex>
                     <Editable
-                      defaultValue={this.state.requestData.date}
+                      defaultValue={this.state.requestData.Date}
                       isPreviewFocusable={true}
                       selectAllOnFocus={false}
                     >
@@ -328,7 +333,7 @@ class SearchPage extends React.Component {
                         px={4}
                         as={EditableInput}
                         value={this.state.requestData.date}
-                        name="date"
+                        name="Date"
                         onChange={event => this.handleInputChange(event.target)}
                       />
                     </Editable>
@@ -336,7 +341,7 @@ class SearchPage extends React.Component {
                   <HStack lineHeight="tight" ml="2">
                     <Flex fontWeight="semibold">Destination</Flex>
                     <Editable
-                      defaultValue={this.state.requestData.to}
+                      defaultValue={this.state.requestData.To}
                       isPreviewFocusable={true}
                       selectAllOnFocus={false}
                     >
@@ -365,7 +370,7 @@ class SearchPage extends React.Component {
                   <HStack lineHeight="tight" ml="2">
                     <Flex fontWeight="semibold">From</Flex>
                     <Editable
-                      defaultValue={this.state.requestData.from}
+                      defaultValue={this.state.requestData.From}
                       isPreviewFocusable={true}
                       selectAllOnFocus={false}
                     >
@@ -382,7 +387,7 @@ class SearchPage extends React.Component {
                   <HStack lineHeight="tight" ml="2">
                     <Flex fontWeight="semibold">Airline</Flex>
                     <Editable
-                      defaultValue={this.state.requestData.airline}
+                      defaultValue={this.state.requestData.Airline}
                       isPreviewFocusable={true}
                       selectAllOnFocus={false}
                     >
@@ -535,7 +540,10 @@ class SearchPage extends React.Component {
             {/* <ModalHeader>User Request</ModalHeader> */}
             <ModalCloseButton />
             <ModalBody>
-              <RequestForm />
+              <RequestForm
+                onFormChange={this.handleRequestFormChange}
+                item={this.state.requestData}
+              />
             </ModalBody>
             <ModalFooter>
               <Button
@@ -546,7 +554,12 @@ class SearchPage extends React.Component {
               >
                 Close
               </Button>
-              <Button colorScheme="teal" mr={3} onClick={this.onCloseUserModal}>
+              <Button
+                colorScheme="teal"
+                mr={3}
+                type="submit"
+                onClick={this.submitRequestForm}
+              >
                 Submit
               </Button>
             </ModalFooter>
