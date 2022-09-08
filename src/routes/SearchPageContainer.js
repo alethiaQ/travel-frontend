@@ -60,7 +60,7 @@ const searchItem = {
   airline: 'Qatar Airways',
 };
 
-const searchResults = [
+let searchResults = [
   { Name: 'Xioaxi', To: 'MurderLand', From: 'Reston' },
   // {
   //   date: '10/14/2022',
@@ -137,6 +137,7 @@ class SearchPage extends React.Component {
       requestGroupModal: false,
       userInputModal: false,
       requestData: props.location.state,
+      responseItems: searchResults,
     };
   }
 
@@ -191,7 +192,7 @@ class SearchPage extends React.Component {
       requestOptions
     )
       .then(response => response.text())
-      .then(result => (searchResults = result))
+      .then(result => this.setState({ responseItems: result }))
       .catch(error => console.log('error', error));
   }
   postUserRequest() {
@@ -399,7 +400,7 @@ class SearchPage extends React.Component {
               </SimpleGrid>
             </GridItem>
             {/* Map of Search results, each result = box, page by 4? */}
-            {searchResults.map(item => {
+            {this.state.responseItems.map(item => {
               return (
                 <GridItem
                   colSpan={5}
