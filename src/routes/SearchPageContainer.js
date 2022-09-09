@@ -61,7 +61,33 @@ const searchItem = {
 };
 
 let searchResults = [
-  { Name: 'Xioaxi', To: 'MurderLand', From: 'Reston' },
+  {
+    Name: 'Xioaxi',
+    To: 'MurderLand',
+    From: 'Reston',
+    Date: '10/14/2022',
+    Airline: 'Qatar',
+    Language: 'English',
+    Pals: '1',
+  },
+  {
+    Name: 'Xioaxi',
+    To: 'MurderLand',
+    From: 'Reston',
+    Date: '10/14/2022',
+    Airline: 'Qatar',
+    Language: 'English',
+    Pals: '1',
+  },
+  {
+    Name: 'Xioaxi',
+    To: 'MurderLand',
+    From: 'Reston',
+    Date: '10/14/2022',
+    Airline: 'Qatar',
+    Language: 'English',
+    Pals: '1',
+  },
   // {
   //   date: '10/14/2022',
   //   destination: 'Washington, DC',
@@ -77,57 +103,13 @@ let searchResults = [
   //   age: '45',
   //   language: 'English',
   // },
-  // {
-  //   date: '10/15/2022',
-  //   destination: 'Washington, DC',
-  //   from: 'Mumbai, India',
-  //   airline: 'Qatar Airways',
-  //   pals: 1,
-  //   flightNo: 'OKL200',
-  //   fromAirport: 'BOM',
-  //   desAirport: 'DCA',
-  //   depart: '4:00pm',
-  //   arrival: '1:00pm',
-  //   rating: 3,
-  //   age: '45',
-  //   language: 'English',
-  // },
-  // {
-  //   date: '10/14/2022',
-  //   destination: 'Baltimore, Maryland',
-  //   from: 'Mumbai, India',
-  //   airline: 'Saudia Airways',
-  //   pals: 5,
-  //   flightNo: 'AC2605',
-  //   fromAirport: 'BOM',
-  //   desAirport: 'BWI',
-  //   depart: '5:00am',
-  //   arrival: '8:00pm',
-  //   rating: 2,
-  //   age: '45',
-  //   language: 'English',
-  // },
-  // {
-  //   date: '10/15/2022',
-  //   destination: 'Dulles, VA',
-  //   from: 'Mumbai, India',
-  //   airline: 'Qatar Airways',
-  //   pals: 0,
-  //   flightNo: 'SQ618',
-  //   fromAirport: 'BOM',
-  //   desAirport: 'IAD',
-  //   depart: '9:00pm',
-  //   arrival: '2:00am',
-  //   rating: 5,
-  //   age: '45',
-  //   language: 'English',
-  // },
 ];
 const exampleBody = {
   statusCode: 200,
   result: [{ Name: 'Xiaoxi', From: 'Murderland', To: 'Prison' }],
 };
 class SearchPage extends React.Component {
+  respItems = [];
   constructor(props) {
     super(props);
     this.state = {
@@ -169,12 +151,14 @@ class SearchPage extends React.Component {
       requestOptions
     )
       .then(response => response.text())
-      .then(result =>
-        this.setState(state => {
-          return { responseItems: result };
-        })
-      )
+      .then(result => console.log(result))
+
+      // return result['errorMessage']
+      //   ? null
+      //   :
+
       .catch(error => console.log('error', error));
+    // console.log(this.state.responseItems);
   }
   submitRequestForm = event => {
     event.preventDefault();
@@ -405,7 +389,7 @@ class SearchPage extends React.Component {
               </SimpleGrid>
             </GridItem>
             {/* Map of Search results, each result = box, page by 4? */}
-            {this.state.responseItems.map(item => {
+            {this.respItems.map(item => {
               return (
                 <GridItem
                   colSpan={5}
@@ -416,39 +400,54 @@ class SearchPage extends React.Component {
                 >
                   <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2}>
                     <Box p="4">
-                      <Box display="flex" alignItems="baseline">
-                        <Box
-                          color="gray.500"
-                          fontWeight="semibold"
-                          letterSpacing="wide"
-                          fontSize="xs"
-                          textTransform="uppercase"
-                          ml="1"
-                          p="2"
-                        >
-                          {item.From}- {item.To}
-                        </Box>
-                      </Box>
-                      <Box
-                        mt="1"
-                        ml="2"
-                        fontWeight="semibold"
-                        as="h4"
-                        lineHeight="tight"
-                        noOfLines={1}
-                      >
-                        {item.Name}
-                      </Box>
-                      <Box ml="2">
-                        {item.depart}
-                        <Box as="span" color="gray.600" fontSize="sm">
-                          {' '}
-                          departure
-                        </Box>
-                      </Box>
-                      <Box display="flex" mt="2" alignItems="center" p="1">
-                        <b>{item.airline}</b>
-                      </Box>
+                      {Object.keys(item).map(key => {
+                        return (
+                          <Box ml="2">
+                            {item[key]}
+                            <Box as="span" color="gray.600" fontSize="sm">
+                              {' '}
+                              {key}
+                            </Box>
+                          </Box>
+                        );
+                      })}
+                      {/* <Box display="flex" alignItems="baseline">
+                            <Box
+                              color="gray.500"
+                              fontWeight="semibold"
+                              letterSpacing="wide"
+                              fontSize="xs"
+                              textTransform="uppercase"
+                              ml="1"
+                              p="2"
+                            >
+                              {item.From}- {item.To}
+                            </Box>
+                          </Box>
+                          <Box
+                            mt="1"
+                            ml="2"
+                            fontWeight="semibold"
+                            as="h4"
+                            lineHeight="tight"
+                            noOfLines={1}
+                          >
+                            {item.Name}
+                            <Box as="span" color="gray.600" fontSize="sm">
+                              {' '}
+                              name
+                            </Box>
+                          </Box>
+                          <Box ml="2">
+                            {item.depart}
+                            <Box as="span" color="gray.600" fontSize="sm">
+                              {' '}
+                              departure
+                            </Box>
+                          </Box>
+                          <Box display="flex" mt="2" alignItems="center" p="1">
+                            <b>{item.Airline}</b>
+                          </Box> */}
                     </Box>
                     <Box p="4">
                       <Box display="flex" alignItems="baseline">
@@ -461,11 +460,11 @@ class SearchPage extends React.Component {
                           ml="1"
                           p="2"
                         >
-                          {item.date}
+                          {item.Date}
                         </Box>
                         {/* <Stack spacing={2} direction="row"> */}
                         <Badge px="2px" colorScheme="teal">
-                          {item.pals} pals
+                          {item.Pals} pals
                         </Badge>
                         <Button
                           colorScheme="teal"
@@ -478,23 +477,14 @@ class SearchPage extends React.Component {
                         </Button>
                         {/* </Stack> */}
                       </Box>
-                      <Box
-                        mt="1"
-                        ml="2"
-                        fontWeight="semibold"
-                        as="h4"
-                        lineHeight="tight"
-                        noOfLines={1}
-                      >
-                        {item.desAirport}
-                      </Box>
-                      <Box ml="2">
-                        {item.arrival}
-                        <Box as="span" color="gray.600" fontSize="sm">
-                          {' '}
-                          arrival
-                        </Box>
-                      </Box>
+                      {/* <Box
+                            mt="1"
+                            ml="2"
+                            fontWeight="semibold"
+                            as="h4"
+                            lineHeight="tight"
+                            noOfLines={1}
+                          ></Box> */}
                     </Box>
                   </SimpleGrid>
                 </GridItem>
