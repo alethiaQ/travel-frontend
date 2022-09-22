@@ -14,104 +14,48 @@ import {
   EditableInput,
   EditablePreview,
   HStack,
-  useColorModeValue,
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
   ModalFooter,
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
-// import { withRouter } from 'react-router-dom';
-// import { useDisclosure } from '@chakra-ui/react';
-import { RepeatIcon, AddIcon, EditIcon } from '@chakra-ui/icons';
-// import { useLocation } from 'react-router-dom';
-import { Outlet, Link as ReactLink } from 'react-router-dom';
+import React from 'react';
+import { RepeatIcon, AddIcon } from '@chakra-ui/icons';
 import SearchPageForm from '../components/SearchPageFilters';
 import RequestForm from '../components/UserRequestForm';
 import ItemDetail from '../components/ItemDetail';
-import { render } from '@testing-library/react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import GroupRequestForm from '../components/GroupRequestForm';
+import { setResponseItems, selectItems } from '../reducer';
+import { useDispatch, useSelector } from 'react-redux';
 
 function withRouter(SearchPage) {
   function ComponentWithRouterProp(props) {
     let location = useLocation();
     let navigate = useNavigate();
+    let storeItems = useSelector(selectItems);
     let params = useParams();
+    let dispatch = useDispatch();
     return (
       <SearchPage
         {...props}
         location={location}
         params={params}
         navigate={navigate}
+        dispatch={dispatch}
+        storeItems={storeItems}
       />
     );
   }
 
   return ComponentWithRouterProp;
 }
-const searchItem = {
-  date: '10/14/2022',
-  destination: 'Mumbai, India',
-  from: 'Washington DC',
-  airline: 'Qatar Airways',
-};
-
-let searchResults = [
-  {
-    Name: 'Xioaxi',
-    To: 'MurderLand',
-    From: 'Reston',
-    Date: '10/14/2022',
-    Airline: 'Qatar',
-    Language: 'English',
-    Pals: '1',
-  },
-  {
-    Name: 'Xioaxi',
-    To: 'MurderLand',
-    From: 'Reston',
-    Date: '10/14/2022',
-    Airline: 'Qatar',
-    Language: 'English',
-    Pals: '1',
-  },
-  {
-    Name: 'Xioaxi',
-    To: 'MurderLand',
-    From: 'Reston',
-    Date: '10/14/2022',
-    Airline: 'Qatar',
-    Language: 'English',
-    Pals: '1',
-  },
-  // {
-  //   date: '10/14/2022',
-  //   destination: 'Washington, DC',
-  //   from: 'Mumbai, India',
-  //   airline: 'Emirates',
-  //   pals: 2,
-  //   flightNo: 'UA1800',
-  //   fromAirport: 'BOM',
-  //   desAirport: 'DCA',
-  //   depart: '7:00am',
-  //   arrival: '12:00am',
-  //   rating: 4,
-  //   age: '45',
-  //   language: 'English',
-  // },
-];
-const exampleBody = {
-  statusCode: 200,
-  result: [{ Name: 'Xiaoxi', From: 'Murderland', To: 'Prison' }],
-};
 class SearchPage extends React.Component {
-  respItems = [];
   constructor(props) {
     super(props);
+    // let getItems = false;
     this.state = {
       detailItemPicked: false,
       item: null,
@@ -119,10 +63,11 @@ class SearchPage extends React.Component {
       requestGroupModal: false,
       userInputModal: false,
       requestData: props.location.state,
-      responseItems: searchResults,
+      responseItems: [],
+      getItems: false,
     };
   }
-
+  // respItems = this.props.store(state => state.responseItems);
   componentDidMount() {
     this.getRequest(this.state.requestData);
   }
@@ -150,14 +95,15 @@ class SearchPage extends React.Component {
       `https://8ck0yps8rj.execute-api.us-west-2.amazonaws.com/dev/request?${params}`,
       requestOptions
     )
-      .then(response => response.text())
-      .then(result => console.log(result))
-
-      // return result['errorMessage']
-      //   ? null
-      //   :
-
+      .then(response => response.json())
+      .then(result => {
+        console.log(result.result);
+        const items = result.result;
+        this.props.dispatch(setResponseItems(items));
+        this.setState({ getItems: true });
+      })
       .catch(error => console.log('error', error));
+
     // console.log(this.state.responseItems);
   }
   submitRequestForm = event => {
@@ -241,6 +187,66 @@ class SearchPage extends React.Component {
     this.setState({ requestGroupModal: false });
   };
   render() {
+    const renderItems = () => {
+      let items = [];
+      if (this.state.getItems == true) {
+        console.log('true');
+        items = this.props.storeItems;
+        console.log(items);
+      }
+      return items.map(item => (
+        <GridItem
+          colSpan={5}
+          bg="gray.200"
+          borderWidth="1px"
+          borderRadius="lg"
+          onClick={e => this.handleClick(e, item)}
+        >
+          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2}>
+            <Box p="4">
+              {Object.keys(item).map(key => {
+                return (
+                  <Box ml="2">
+                    {item[key]}
+                    <Box as="span" color="gray.600" fontSize="sm">
+                      {' '}
+                      {key}
+                    </Box>
+                  </Box>
+                );
+              })}
+            </Box>
+            <Box p="4">
+              <Box display="flex" alignItems="baseline">
+                <Box
+                  color="gray.500"
+                  fontWeight="semibold"
+                  letterSpacing="wide"
+                  fontSize="xs"
+                  textTransform="uppercase"
+                  ml="1"
+                  p="2"
+                >
+                  {item.Date}
+                </Box>
+                <Badge px="2px" colorScheme="teal">
+                  {item.Pals} pals
+                </Badge>
+                <Button
+                  colorScheme="teal"
+                  size="xs"
+                  float="right"
+                  ml="180"
+                  onClick={this.openRequestModal}
+                >
+                  <AddIcon />
+                </Button>
+              </Box>
+            </Box>
+          </SimpleGrid>
+        </GridItem>
+      ));
+    };
     return (
       <Flex
         className="searchContainer"
@@ -389,107 +395,7 @@ class SearchPage extends React.Component {
               </SimpleGrid>
             </GridItem>
             {/* Map of Search results, each result = box, page by 4? */}
-            {this.respItems.map(item => {
-              return (
-                <GridItem
-                  colSpan={5}
-                  bg="gray.200"
-                  borderWidth="1px"
-                  borderRadius="lg"
-                  onClick={e => this.handleClick(e, item)}
-                >
-                  <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2}>
-                    <Box p="4">
-                      {Object.keys(item).map(key => {
-                        return (
-                          <Box ml="2">
-                            {item[key]}
-                            <Box as="span" color="gray.600" fontSize="sm">
-                              {' '}
-                              {key}
-                            </Box>
-                          </Box>
-                        );
-                      })}
-                      {/* <Box display="flex" alignItems="baseline">
-                            <Box
-                              color="gray.500"
-                              fontWeight="semibold"
-                              letterSpacing="wide"
-                              fontSize="xs"
-                              textTransform="uppercase"
-                              ml="1"
-                              p="2"
-                            >
-                              {item.From}- {item.To}
-                            </Box>
-                          </Box>
-                          <Box
-                            mt="1"
-                            ml="2"
-                            fontWeight="semibold"
-                            as="h4"
-                            lineHeight="tight"
-                            noOfLines={1}
-                          >
-                            {item.Name}
-                            <Box as="span" color="gray.600" fontSize="sm">
-                              {' '}
-                              name
-                            </Box>
-                          </Box>
-                          <Box ml="2">
-                            {item.depart}
-                            <Box as="span" color="gray.600" fontSize="sm">
-                              {' '}
-                              departure
-                            </Box>
-                          </Box>
-                          <Box display="flex" mt="2" alignItems="center" p="1">
-                            <b>{item.Airline}</b>
-                          </Box> */}
-                    </Box>
-                    <Box p="4">
-                      <Box display="flex" alignItems="baseline">
-                        <Box
-                          color="gray.500"
-                          fontWeight="semibold"
-                          letterSpacing="wide"
-                          fontSize="xs"
-                          textTransform="uppercase"
-                          ml="1"
-                          p="2"
-                        >
-                          {item.Date}
-                        </Box>
-                        {/* <Stack spacing={2} direction="row"> */}
-                        <Badge px="2px" colorScheme="teal">
-                          {item.Pals} pals
-                        </Badge>
-                        <Button
-                          colorScheme="teal"
-                          size="xs"
-                          float="right"
-                          ml="180"
-                          onClick={this.openRequestModal}
-                        >
-                          <AddIcon />
-                        </Button>
-                        {/* </Stack> */}
-                      </Box>
-                      {/* <Box
-                            mt="1"
-                            ml="2"
-                            fontWeight="semibold"
-                            as="h4"
-                            lineHeight="tight"
-                            noOfLines={1}
-                          ></Box> */}
-                    </Box>
-                  </SimpleGrid>
-                </GridItem>
-              );
-            })}
+            {renderItems()}
           </Grid>
         </VStack>
         <Box
@@ -575,4 +481,7 @@ class SearchPage extends React.Component {
     );
   }
 }
+// connect()(SearchPage);
 export default withRouter(SearchPage);
+
+// export default connect()(TopForm);

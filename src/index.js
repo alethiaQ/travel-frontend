@@ -5,7 +5,8 @@ import { Switch } from 'react-router';
 import App from './App';
 import Home from './routes/Home';
 import SearchPage from './routes/SearchPageContainer';
-
+import { store } from './store';
+import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 import { createRoot } from 'react-dom/client';
@@ -15,26 +16,28 @@ import UserProfile from './components/user-profile';
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 root.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />}>
-        <Route path="/home" element={<Home />} />
-        {/* <Route path="profile" element={<UserProfiles />}>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route path="/home" element={<Home />} />
+          {/* <Route path="profile" element={<UserProfiles />}>
             <Route path=":profileId" element={<UserProfile />} />
           </Route> */}
-        <Route path="/search" element={<SearchPage />} />
-        <Route
-          path="*"
-          element={
-            <main style={{ padding: '1rem' }}>
-              <p>There's nothing here!</p>
-            </main>
-          }
-        />
-      </Route>
-    </Routes>
-    <ColorModeScript />
-  </BrowserRouter>
+          <Route path="/search" element={<SearchPage />} />
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: '1rem' }}>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
+        </Route>
+      </Routes>
+      <ColorModeScript />
+    </BrowserRouter>
+  </Provider>
 );
 // path = * is "Not Found Page"
 

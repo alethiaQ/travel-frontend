@@ -21,6 +21,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 export default class RequestForm extends React.Component {
   // const [showPassword, setShowPassword] = useState(false);
   state = this.props.item;
+  // state = {nam}
   handleInputChange = event => {
     // console.log(this.state);
     this.state[event.target.name] = event.target.value;

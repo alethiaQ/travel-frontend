@@ -16,8 +16,11 @@ import {
   AutoCompleteItem,
   AutoCompleteList,
 } from '@choc-ui/chakra-autocomplete';
+import { connect } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+import { setRequest } from '../reducer';
 // const navigate = useNavigate();
-export default class TopForm extends Component {
+class TopForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -296,7 +299,10 @@ export default class TopForm extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
+    // event.preventDefault();
+    const { dispatch } = this.props;
+    // console.log(dispatch);
+    dispatch(setRequest(this.state));
     // console.log(this.state);
     this.setState({
       To: '',
@@ -304,6 +310,7 @@ export default class TopForm extends Component {
       Date: '',
       Airline: '',
     });
+
     // navigate('../search', { replace: true });
   }
   render() {
@@ -436,17 +443,16 @@ export default class TopForm extends Component {
                 Airline: this.state.Airline,
                 Date: this.state.Date,
               }}
-              {...this.props}
             >
               <IconButton
                 size="md"
                 type="submit"
-                onSubmit={this.handleSubmit}
                 aria-label="Search database"
                 isRound="true"
                 icon={<SearchIcon />}
                 color="white"
                 bg="black"
+                onClick={this.handleSubmit}
               >
                 {' '}
                 {/* <Navigate to="/search" replace={true} /> */}
@@ -458,3 +464,4 @@ export default class TopForm extends Component {
     );
   }
 }
+export default connect()(TopForm);
