@@ -5,6 +5,10 @@ import {
   Image,
   Stack,
   Badge,
+  List,
+  Text,
+  ListItem,
+  ListIcon,
   VStack,
   Grid,
   GridItem,
@@ -21,6 +25,7 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react';
+
 import React from 'react';
 import { RepeatIcon, AddIcon } from '@chakra-ui/icons';
 import SearchPageForm from '../components/SearchPageFilters';
@@ -204,39 +209,62 @@ class SearchPage extends React.Component {
         >
           <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2}>
             <Box p="4">
-              {Object.keys(item).map(key => {
-                return (
-                  <Box ml="2">
-                    {item[key]}
-                    <Box as="span" color="gray.600" fontSize="sm">
-                      {' '}
-                      {key}
-                    </Box>
-                  </Box>
-                );
-              })}
-            </Box>
-            <Box p="4">
               <Box display="flex" alignItems="baseline">
                 <Box
                   color="gray.500"
                   fontWeight="semibold"
                   letterSpacing="wide"
-                  fontSize="xs"
+                  fontSize="sm"
                   textTransform="uppercase"
-                  ml="1"
+                  ml="2"
+                  // p="2"
+                >
+                  {item.Name}
+                </Box>
+              </Box>
+              <Box bg={'gray.90'} px={4} py={4}>
+                <List spacing={3}>
+                  <ListItem>
+                    {' '}
+                    <Text as="b"> To </Text>
+                    {item.To}
+                  </ListItem>
+                  <ListItem>
+                    <Text as="b">From </Text>
+                    {item.From}
+                  </ListItem>
+                  <ListItem>
+                    <Text as="b">Airline </Text>
+                    {item.Airline}
+                  </ListItem>
+                  <ListItem>
+                    <Text as="b">Language </Text>
+                    {item.Language}
+                  </ListItem>
+                </List>
+              </Box>
+            </Box>
+            <Box p="4">
+              <Box display="flex" alignItems="baseline" position="relative">
+                <Box
+                  color="gray.500"
+                  fontWeight="semibold"
+                  letterSpacing="wide"
+                  fontSize="sm"
+                  textTransform="uppercase"
+                  ml="2"
                   p="2"
                 >
-                  {item.Date}
+                  Departure: {item.Date}
                 </Box>
-                <Badge px="2px" colorScheme="teal">
-                  {item.Pals} pals
-                </Badge>
                 <Button
                   colorScheme="teal"
-                  size="xs"
-                  float="right"
-                  ml="180"
+                  size="sm"
+                  // float="right"
+                  // ml="180"
+                  position="absolute"
+                  top={2}
+                  right={4}
                   onClick={this.openRequestModal}
                 >
                   <AddIcon />
