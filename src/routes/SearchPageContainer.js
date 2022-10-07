@@ -24,6 +24,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  list,
 } from '@chakra-ui/react';
 
 import React from 'react';
@@ -199,81 +200,83 @@ class SearchPage extends React.Component {
         items = this.props.storeItems;
         console.log(items);
       }
-      return items.map(item => (
-        <GridItem
-          colSpan={5}
-          bg="gray.200"
-          borderWidth="1px"
-          borderRadius="lg"
-          onClick={e => this.handleClick(e, item)}
-        >
-          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2}>
-            <Box p="4">
-              <Box display="flex" alignItems="baseline">
-                <Box
-                  color="gray.500"
-                  fontWeight="semibold"
-                  letterSpacing="wide"
-                  fontSize="sm"
-                  textTransform="uppercase"
-                  ml="2"
-                  // p="2"
-                >
-                  {item.Name}
+      if (items) {
+        return items.map(item => (
+          <GridItem
+            colSpan={5}
+            bg="gray.200"
+            borderWidth="1px"
+            borderRadius="lg"
+            onClick={e => this.handleClick(e, item)}
+          >
+            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2}>
+              <Box p="4">
+                <Box display="flex" alignItems="baseline">
+                  <Box
+                    color="gray.500"
+                    fontWeight="semibold"
+                    letterSpacing="wide"
+                    fontSize="sm"
+                    textTransform="uppercase"
+                    ml="2"
+                    // p="2"
+                  >
+                    {item.Name}
+                  </Box>
+                </Box>
+                <Box bg={'gray.90'} px={4} py={4}>
+                  <List spacing={3}>
+                    <ListItem>
+                      {' '}
+                      <Text as="b"> To </Text>
+                      {item.To}
+                    </ListItem>
+                    <ListItem>
+                      <Text as="b">From </Text>
+                      {item.From}
+                    </ListItem>
+                    <ListItem>
+                      <Text as="b">Airline </Text>
+                      {item.Airline}
+                    </ListItem>
+                    <ListItem>
+                      <Text as="b">Language </Text>
+                      {item.Language}
+                    </ListItem>
+                  </List>
                 </Box>
               </Box>
-              <Box bg={'gray.90'} px={4} py={4}>
-                <List spacing={3}>
-                  <ListItem>
-                    {' '}
-                    <Text as="b"> To </Text>
-                    {item.To}
-                  </ListItem>
-                  <ListItem>
-                    <Text as="b">From </Text>
-                    {item.From}
-                  </ListItem>
-                  <ListItem>
-                    <Text as="b">Airline </Text>
-                    {item.Airline}
-                  </ListItem>
-                  <ListItem>
-                    <Text as="b">Language </Text>
-                    {item.Language}
-                  </ListItem>
-                </List>
-              </Box>
-            </Box>
-            <Box p="4">
-              <Box display="flex" alignItems="baseline" position="relative">
-                <Box
-                  color="gray.500"
-                  fontWeight="semibold"
-                  letterSpacing="wide"
-                  fontSize="sm"
-                  textTransform="uppercase"
-                  ml="2"
-                  p="2"
-                >
-                  Departure: {item.Date}
+              <Box p="4">
+                <Box display="flex" alignItems="baseline" position="relative">
+                  <Box
+                    color="gray.500"
+                    fontWeight="semibold"
+                    letterSpacing="wide"
+                    fontSize="sm"
+                    textTransform="uppercase"
+                    ml="2"
+                    p="2"
+                  >
+                    Departure: {item.Date}
+                  </Box>
+                  <Button
+                    colorScheme="teal"
+                    size="sm"
+                    // float="right"
+                    // ml="180"
+                    position="absolute"
+                    top={2}
+                    right={4}
+                    onClick={this.openRequestModal}
+                  >
+                    <AddIcon />
+                  </Button>
                 </Box>
-                <Button
-                  colorScheme="teal"
-                  size="sm"
-                  // float="right"
-                  // ml="180"
-                  position="absolute"
-                  top={2}
-                  right={4}
-                  onClick={this.openRequestModal}
-                >
-                  <AddIcon />
-                </Button>
               </Box>
-            </Box>
-          </SimpleGrid>
-        </GridItem>
-      ));
+            </SimpleGrid>
+          </GridItem>
+        ));
+      }
     };
     return (
       <Flex
