@@ -3,7 +3,7 @@ import { ChakraProvider, Flex } from '@chakra-ui/react';
 import Home from './routes/Home';
 import FooterComponent from './components/footer';
 import Nav from './components/Nav';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import theme from './theme';
 // transBlack: "rgba(0, 0, 0, 0.2)"
 function App() {
@@ -19,8 +19,12 @@ function App() {
         justify={{ base: 'center', md: 'space-around', xl: 'space-between' }}
         direction={{ base: 'column-reverse', md: 'row' }}
       >
+        {/* <Router> */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
         <Outlet />
-        {/* <Home /> */}
+        {/* </Router> */}
       </Flex>
       <FooterComponent />
     </ChakraProvider>

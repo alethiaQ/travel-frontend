@@ -10,6 +10,7 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
+import SearchPageContainer from './SearchPageContainer';
 function Home() {
   return (
     <VStack
@@ -36,6 +37,7 @@ function Home() {
         >
           Let Your Journey Begin Now...
         </Heading>
+
         {/* <Stack direction={'row'}> */}
         <Link as={ReactLink} to="/search">
           <Button
@@ -51,6 +53,7 @@ function Home() {
         </Link>
 
         {/* </Stack> */}
+        {/* {formFilled = true ? <StatsCard /> : <SearchPageContainer /> } */}
         <StatsCard />
       </Stack>
     </VStack>

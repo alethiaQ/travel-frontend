@@ -1,43 +1,23 @@
 import { ColorModeScript } from '@chakra-ui/react';
-import React from 'react';
-import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
-import { Switch } from 'react-router';
-import App from './App';
-import Home from './routes/Home';
-import SearchPage from './routes/SearchPageContainer';
+import React, { lazy } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+
 import { store } from './store';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 import { createRoot } from 'react-dom/client';
-import UserProfiles from './routes/user-profiles';
-import UserProfile from './components/user-profile';
 
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
+const LazyApp = lazy(() => import('./App'));
 root.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="/home" element={<Home />} />
-          {/* <Route path="profile" element={<UserProfiles />}>
-            <Route path=":profileId" element={<UserProfile />} />
-          </Route> */}
-          <Route path="/search" element={<SearchPage />} />
-          <Route
-            path="*"
-            element={
-              <main style={{ padding: '1rem' }}>
-                <p>There's nothing here!</p>
-              </main>
-            }
-          />
-        </Route>
-      </Routes>
+  <BrowserRouter>
+    <Provider store={store}>
+      <LazyApp />
       <ColorModeScript />
-    </BrowserRouter>
-  </Provider>
+    </Provider>
+  </BrowserRouter>
 );
 // path = * is "Not Found Page"
 
