@@ -43,8 +43,6 @@ const NavLink = ({ children }) => (
 );
 
 export default function Nav() {
-  const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       <Box bg="black" px={4}>
@@ -63,7 +61,7 @@ export default function Nav() {
           </HStack>
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={5}>
-              <Link as={ReactLink} to="/home">
+              <Link as={ReactLink} to="/">
                 <IconButton colorScheme="white" icon={<MdHome />} />
                 {/* <Icon as={MdHome} color="white" size="lg" />
                 </IconButton> */}
