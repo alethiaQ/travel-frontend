@@ -5,6 +5,7 @@ import FooterComponent from './components/footer';
 import Nav from './components/Nav';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import theme from './theme';
+import SearchPageContainer from './routes/SearchPageContainer';
 // transBlack: "rgba(0, 0, 0, 0.2)"
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         {/* <Router> */}
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/search" element={<SearchPageContainer />} />
         </Routes>
         <Outlet />
         {/* </Router> */}
