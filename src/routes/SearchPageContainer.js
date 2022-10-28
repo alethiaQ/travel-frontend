@@ -192,6 +192,11 @@ class SearchPage extends React.Component {
   onCloseRequestModal = () => {
     this.setState({ requestGroupModal: false });
   };
+  setFilteredRequest = filteredObj => {
+    console.log(filteredObj);
+    const newObj = { ...filteredObj, ...this.state.requestData };
+    this.getRequest(newObj);
+  };
   render() {
     const renderItems = () => {
       let items = [];
@@ -295,7 +300,7 @@ class SearchPage extends React.Component {
       >
         <VStack margin="0 auto">
           <Box display="flex" alignItems="baseline">
-            <SearchPageForm />
+            <SearchPageForm onChangeFilter={this.setFilteredRequest} />
           </Box>
           <Grid
             h="700px"
