@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChakraProvider, Flex } from '@chakra-ui/react';
+import { ChakraProvider, Flex, position } from '@chakra-ui/react';
 import Home from './routes/Home';
 import FooterComponent from './components/footer';
 import Nav from './components/Nav';
@@ -28,7 +28,7 @@ function App() {
         <Outlet />
         {/* </Router> */}
       </Flex>
-      <FooterComponent />
+      {/* <FooterComponent /> */}
     </ChakraProvider>
   );
 }

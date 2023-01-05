@@ -296,6 +296,7 @@ class SearchPage extends React.Component {
         bgGradient={'linear(to-b, blackAlpha.900, transparent)'}
         align={['center', 'center', 'flex-start', 'flex-start']}
         m="6 auto"
+
         // {...rest}
       >
         <VStack margin="0 auto">
@@ -303,12 +304,13 @@ class SearchPage extends React.Component {
             <SearchPageForm onChangeFilter={this.setFilteredRequest} />
           </Box>
           <Grid
-            h="700px"
+            h="900px"
             w="800px"
             templateRows="repeat(2, 1fr)"
             templateColumns="repeat(5, 1fr)"
             gap={4}
             p={4}
+            overflowY="auto"
           >
             {/* User Input box */}
             <GridItem
