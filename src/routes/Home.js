@@ -3,11 +3,13 @@ import StatsCard from '../components/StatBoxes';
 import {
   Stack,
   Button,
+  Grid,
   Text,
   VStack,
   useBreakpointValue,
   Link,
   Heading,
+  Flex,
 } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 import SearchPageContainer from './SearchPageContainer';
@@ -16,10 +18,14 @@ function Home() {
     <VStack
       w={'full'}
       justify={'center'}
+      alignItems="center"
       px={useBreakpointValue({ base: 4, md: 8 })}
       bgGradient={'linear(to-b, blackAlpha.900, transparent)'}
     >
+      {/* <Flex justify={'top'}> */}
       <TopForm />
+      {/* </Flex> */}
+
       <Stack
         maxW={'2xl'}
         align="center"

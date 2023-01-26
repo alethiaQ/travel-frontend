@@ -315,22 +315,22 @@ class TopForm extends Component {
   }
   render() {
     return (
-      <form onSubmit={this.handleSubmit} noValidate autoComplete="off">
-        <Flex
-          alignItems="center"
-          justifySelf="center"
-          p="2"
-          rounded="full"
-          boxShadow="md"
-          m="4"
-          borderRadius="30px"
-          bg="white"
-          w="40%"
-          h="6%"
-          position="absolute"
-          top={10}
-          left={488}
-        >
+      <Flex
+        alignItems="center"
+        justifySelf="center"
+        p="2"
+        rounded="full"
+        boxShadow="md"
+        m="4"
+        borderRadius="30px"
+        bg="white"
+        w="40%"
+        h="6%"
+        position="absolute"
+        top={10}
+        left={488}
+      >
+        <form onSubmit={this.handleSubmit} noValidate autoComplete="off">
           <HStack
             divider={<StackDivider borderColor="gray.200" />}
             align="center"
@@ -459,8 +459,8 @@ class TopForm extends Component {
               </IconButton>
             </Link>
           </HStack>
-        </Flex>
-      </form>
+        </form>
+      </Flex>
     );
   }
 }

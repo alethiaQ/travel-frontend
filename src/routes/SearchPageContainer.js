@@ -78,14 +78,13 @@ class SearchPage extends React.Component {
     this.getRequest(this.state.requestData);
   }
   getRequest(requestedInfo) {
-    console.log(requestedInfo);
     let params = '';
     for (const key in requestedInfo) {
       requestedInfo[key]
         ? (params += `${key}=${requestedInfo[key]}`)
         : (params = params);
     }
-    console.log(params.replace(/\s/g, ''));
+
     params.replace(/\s/g, '');
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -103,7 +102,6 @@ class SearchPage extends React.Component {
     )
       .then(response => response.json())
       .then(result => {
-        console.log(result.result);
         const items = result.result;
         this.props.dispatch(setResponseItems(items));
         this.setState({ getItems: true });
@@ -114,26 +112,37 @@ class SearchPage extends React.Component {
   }
   submitRequestForm = event => {
     event.preventDefault();
+
     return this.postUserRequest();
   };
   postUserRequest() {
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
+    const checkIfEmpty = Object.values(this.state.requestData).filter(
+      item => item !== ''
+    );
 
-    const requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: JSON.stringify(this.state.requestData),
-      redirect: 'follow',
-    };
+    if (checkIfEmpty.length !== 0) {
+      const myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
 
-    fetch(
-      'https://8ck0yps8rj.execute-api.us-west-2.amazonaws.com/dev/request',
-      requestOptions
-    )
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+      const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: JSON.stringify(this.state.requestData),
+        redirect: 'follow',
+      };
+      // console.log('no');
+      // fetch(
+      //   'https://8ck0yps8rj.execute-api.us-west-2.amazonaws.com/dev/request',
+      //   requestOptions
+      // )
+      //   .then(response => response.text())
+      //   .then(result => console.log(result))
+      //   .catch(error => console.log('error', error));
+    } else {
+      window.alert("You can't submit a blank entry, try again.");
+      console.log('add params');
+    }
+
     this.onCloseUserModal();
   }
   handleRequestFormChange = obj => {
@@ -174,9 +183,7 @@ class SearchPage extends React.Component {
       }
     );
   };
-  handleEditSubmission = event => {
-    console.log(this.state.requestData);
-  };
+
   handleClick = (event, item) => {
     this.setState({ detailItemPicked: true, item: item });
   };
@@ -193,7 +200,6 @@ class SearchPage extends React.Component {
     this.setState({ requestGroupModal: false });
   };
   setFilteredRequest = filteredObj => {
-    console.log(filteredObj);
     const newObj = { ...filteredObj, ...this.state.requestData };
     this.getRequest(newObj);
   };
@@ -201,9 +207,7 @@ class SearchPage extends React.Component {
     const renderItems = () => {
       let items = [];
       if (this.state.getItems == true) {
-        console.log('true');
         items = this.props.storeItems;
-        console.log(items);
       }
       if (items) {
         return items.map(item => (
